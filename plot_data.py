@@ -2,7 +2,7 @@ import csv
 import matplotlib.pyplot as plt
 import datetime
 
-data_file = "posts.csv"
+data_file = "posts_formatted.csv"
 
 def read_data():
     with open(data_file, "r") as f:
@@ -54,7 +54,7 @@ def plot_average_ratio_over_time(data, field1, field2):
 
 
 data = read_data()
-# plot_average_over_time(data, "length")
+plot_average_over_time(data, "length")
 # plot_average_over_time(data, "comments")
 # plot_average_over_time(data, "votes")
 # plot_average_ratio_over_time(data, "comments", "votes")
