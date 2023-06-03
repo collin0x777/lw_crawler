@@ -23,10 +23,11 @@ def plot_average_over_time(data, field):
     buckets = {}
     for row in data:
         date = row["date"]
+        date_bucket = datetime.datetime(date.year, date.month, 1)
         value = int(row[field])
-        if date not in buckets:
-            buckets[date] = []
-        buckets[date].append(value)
+        if date_bucket not in buckets:
+            buckets[date_bucket] = []
+        buckets[date_bucket].append(value)
 
     averages = {date: (sum(values)/len(values)) for (date, values) in buckets.items()}
 
@@ -38,12 +39,14 @@ def plot_average_over_time(data, field):
 def plot_average_ratio_over_time(data, field1, field2):
     buckets = {}
     for row in data:
+        # use buckets of 1 month
         date = row["date"]
+        date_bucket = datetime.datetime(date.year, date.month, 1)
         value1 = int(row[field1])
         value2 = int(row[field2])
-        if date not in buckets:
-            buckets[date] = []
-        buckets[date].append(value1/value2)
+        if date_bucket not in buckets:
+            buckets[date_bucket] = []
+        buckets[date_bucket].append(value1/value2)
 
     averages = {date: (sum(values)/len(values)) for (date, values) in buckets.items()}
 
@@ -55,6 +58,6 @@ def plot_average_ratio_over_time(data, field1, field2):
 
 data = read_data()
 plot_average_over_time(data, "length")
-# plot_average_over_time(data, "comments")
-# plot_average_over_time(data, "votes")
-# plot_average_ratio_over_time(data, "comments", "votes")
+plot_average_over_time(data, "comments")
+plot_average_over_time(data, "votes")
+plot_average_ratio_over_time(data, "comments", "votes")
